@@ -1,0 +1,85 @@
+<?xml version="1.0"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-jsptaglibrary_2_0.xsd" version="2.0">
+
+	<description>YunWei Tag Library</description>
+	<tlib-version>1.0</tlib-version>
+	<short-name>YunWei</short-name>
+	<uri>http://www.yunwei.com/jsp/tags</uri>
+
+	<tag>
+		<description>
+		Popup Edit button tag
+    	</description>
+		<name>button-edit</name>
+		<tag-class>com.github.springrest.util.ButtonEditTag</tag-class>
+		<body-content>JSP</body-content>
+
+		<attribute>
+			<description>
+			name
+        </description>
+			<name>name</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+			hiddenName
+        </description>
+			<name>hiddenName</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+			id
+        </description>
+			<name>id</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+			profileId
+        </description>
+			<name>profileId</name>
+			<required>true</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		
+		<attribute>
+			<description>
+			txtVal
+        </description>
+			<name>txtVal</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+
+		<attribute>
+			<description>
+			hiddenVal
+        </description>
+			<name>hiddenVal</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+		<attribute>
+			<description>
+			width
+        </description>
+			<name>width</name>
+			<required>false</required>
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+
+	</tag>
+
+
+
+</taglib>
