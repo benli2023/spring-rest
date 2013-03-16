@@ -7,4 +7,8 @@
 target
 .svn
 .settings
+.classpath
+select2
+My97DatePicker
 classes
+simpletable

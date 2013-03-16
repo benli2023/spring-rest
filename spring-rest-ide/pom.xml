@@ -11,6 +11,5 @@
 		<module>../spring-rest-dependencies</module>
 		<module>../spring-rest-pres</module>
 		<module>../sprint-rest-context</module>
-		<module>../Test</module>
 	</modules>
 </project>

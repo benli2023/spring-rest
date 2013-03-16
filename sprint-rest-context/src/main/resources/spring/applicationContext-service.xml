@@ -11,7 +11,7 @@
 	<bean id="classPathResourceLoader" class="org.springframework.core.io.DefaultResourceLoader" />
 	<bean id="colModelFactory" class="com.github.springrest.util.ColModelFactory">
 			<constructor-arg index="0">
-				<value>com/company/project/controller/colmodel/</value>
+				<value>${app.colmodel.package}</value>
 			</constructor-arg>
 			<constructor-arg index="1">
 				<ref bean="classPathResourceLoader" />

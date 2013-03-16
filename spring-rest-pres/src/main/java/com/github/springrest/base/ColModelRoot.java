@@ -35,7 +35,7 @@ public class ColModelRoot {
 	}
 
 	public ColModelProfile getProfile(String profileId) {
-		if (profileId == null || profileId.trim().length() == 0) {
+		if (profileId == null || profileId.trim().length() == 0||map.get(profileId)==null) {
 			return defaulColModelProfile;
 		}
 		return map.get(profileId);
