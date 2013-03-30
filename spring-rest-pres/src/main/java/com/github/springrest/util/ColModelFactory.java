@@ -52,8 +52,6 @@ public class ColModelFactory {
 		if ((result = colModelCache.get(modelxml)) == null) {
 			Digester digester = digesterLoader.newDigester();
 			Resource resource = resourceLoader.getResource(colModelPath.concat(modelxml));
-			System.out.println(resource.getFile().getAbsoluteFile());
-			System.out.println(resource.getInputStream());
 			ColModelRoot colModelRoot = (ColModelRoot) digester.parse(resource.getInputStream());
 			result = colModelCache.putIfAbsent(modelxml, colModelRoot);
 			result = (result == null ? colModelRoot : result);
