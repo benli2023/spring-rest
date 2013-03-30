@@ -12,6 +12,16 @@ var PopupSelection=(function($) {
 		        $('#'+fieldId).val(rowData[localPopupOption[fieldId].textColumn]).next('.popup_hidden_Id:eq(0)').val(rowData[localPopupOption[fieldId].valueColumn]);
 		        $('#'+fieldId).next().next('.mini-buttonedit-button:eq(0)').hide();
 		        $('#'+fieldId).next().next().next('.mini-buttonedit-close:eq(0)').show();
+					//callback
+				if((localPopupOption[fieldId].callback)&&($.isFunction(localPopupOption[fieldId].callback))) {
+					localPopupOption[fieldId].callback(rowData,fieldId);
+				}
+				if(localPopupOption[fieldId].fields&&$.isPlainObject(localPopupOption[fieldId].fields )) {
+					for( key in localPopupOption[fieldId].fields) {
+						var colName=localPopupOption[fieldId].fields[key];
+						$('#'+key).val(rowData[colName]);
+					}
+				}
 		     };
 		     
 		     function clearSelection(object,fieldId) {
