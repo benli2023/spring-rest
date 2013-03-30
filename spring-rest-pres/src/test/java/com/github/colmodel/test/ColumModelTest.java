@@ -6,7 +6,6 @@ import java.util.List;
 import junit.framework.Assert;
 import junit.framework.TestCase;
 
-import org.springframework.core.io.FileSystemResourceLoader;
 import com.github.springrest.base.ColEditor;
 import com.github.springrest.base.ColModel;
 import com.github.springrest.base.ColModelProfile;
@@ -14,16 +13,13 @@ import com.github.springrest.base.EditorRule;
 import com.github.springrest.util.ColModelFactory;
 
 public class ColumModelTest extends TestCase {
-	private static final String ROOT_PATH = "D:\\WS\\Order\\spring-rest\\spring-rest-pres\\src\\test\\resources\\colmodel\\";
 	private ColModelProfile colModelProfile = null;
 	private ColModel testColModel = null;
-	private ColModel testColModel1 = null;
+
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
-		colModelProfile = new ColModelFactory(ROOT_PATH,
-				new FileSystemResourceLoader(), 4).getColModel(
-				"StockRecordLine-colmodel.xml", null);
+		colModelProfile = new ColModelFactory("/colmodel/", null, 4).getColModel("StockRecordLine-colmodel.xml", null);
 		Assert.assertNotNull(colModelProfile);
 		Iterator<ColModel> it = colModelProfile.getColModels().iterator();
 		while (it.hasNext()) {
@@ -31,8 +27,6 @@ public class ColumModelTest extends TestCase {
 			if (colmodel.getName().equals("quantity")) {
 				testColModel = colmodel;
 				break;
-			}else {
-				testColModel1=colmodel;
 			}
 		}
 		Assert.assertNotNull(testColModel);
@@ -48,22 +42,18 @@ public class ColumModelTest extends TestCase {
 	public void testEditorType() {
 		Assert.assertEquals("omNumberField", testColModel.getEditor().getType());
 	}
-	
-	public void testNullEditor() {
-		Assert.assertNull(testColModel1.getEditor());
-	}
 
 	public void testEditorRules() {
 		ColEditor editor = testColModel.getEditor();
 		Assert.assertNotNull(editor);
 		List<EditorRule> rules = editor.getRules();
-		Assert.assertTrue(rules!=null&&rules.size()==1);
-		EditorRule editorRule=rules.get(0);
+		Assert.assertTrue(rules != null && rules.size() == 1);
+		EditorRule editorRule = rules.get(0);
 		Assert.assertNotNull(editorRule);
 		Assert.assertEquals("required", editorRule.getMethod());
 		Assert.assertEquals("true", editorRule.getValue());
 		Assert.assertEquals("数量是必填的", editorRule.getMessage());
-		
+
 	}
 
 }
