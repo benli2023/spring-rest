@@ -15,7 +15,7 @@ import com.github.springrest.util.ColModelFactory;
 public class ColumModelTest extends TestCase {
 	private ColModelProfile colModelProfile = null;
 	private ColModel testColModel = null;
-
+	
 	@Override
 	protected void setUp() throws Exception {
 		super.setUp();
@@ -24,7 +24,7 @@ public class ColumModelTest extends TestCase {
 		Iterator<ColModel> it = colModelProfile.getColModels().iterator();
 		while (it.hasNext()) {
 			ColModel colmodel = it.next();
-			if (colmodel.getName().equals("quantity")) {
+			if (colmodel.getName().equals("invoiceNumber")) {
 				testColModel = colmodel;
 				break;
 			}
@@ -41,6 +41,17 @@ public class ColumModelTest extends TestCase {
 
 	public void testEditorType() {
 		Assert.assertEquals("omNumberField", testColModel.getEditor().getType());
+	}
+	public void testOptionsAndRender() {
+		Assert.assertNotNull(testColModel.getEditor().getOptions());
+		Assert.assertNotNull(testColModel.getRenderer());
+		System.out.println(testColModel.getEditor().getOptions());
+		System.out.println(testColModel.getRenderer());
+	}
+	
+	public void testCustomValidator() {
+		Assert.assertNotNull(testColModel.getEditor().getRules().get(0).getCustomValidator());
+		System.out.println(testColModel.getEditor().getRules().get(0).getCustomValidator());
 	}
 
 	public void testEditorRules() {

@@ -11,17 +11,20 @@ public class ColModel {
 	private final String width;
 	private final String align;
 	private ColEditor editor;
+	private final String renderer;
 	@ObjectCreate(pattern = "column-models/profile/column-model")
 	public ColModel(
 			@CallParam(pattern = "column-models/profile/column-model/header") String header,
 			@CallParam(pattern = "column-models/profile/column-model/name") String name,
 			@CallParam(pattern = "column-models/profile/column-model/width") String width,
-			@CallParam(pattern = "column-models/profile/column-model/align") String align) {
+			@CallParam(pattern = "column-models/profile/column-model/align") String align,
+			@CallParam(pattern = "column-models/profile/column-model/renderer")String renderer) {
 		super();
 		this.header = header;
 		this.name = name;
 		this.width = width;
 		this.align = align;
+		this.renderer=renderer;
 	}
 
 	public String getHeader() {
@@ -46,6 +49,10 @@ public class ColModel {
 	@SetNext()
 	public void setEditor(ColEditor editor) {
 		this.editor = editor;
+	}
+
+	public String getRenderer() {
+		return renderer;
 	}
 	
 

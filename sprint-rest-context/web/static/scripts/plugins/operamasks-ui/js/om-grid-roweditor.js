@@ -448,7 +448,20 @@
 	    			}
 	    		}
 	    		return rowData;
+	    	},
+	    	
+	    	/**触发校验**/
+	    	ValidateRowData:function() {
+	    		//清空错误信息
+				$.each(self._errorHolders,function(name , holder){
+	    			holder.empty().hide();
+				});
+		    	if(self._validator){
+		    		self._validator.form();
+					return ;
+				}
 	    	}
+	    	
 	 	});    
     });
     

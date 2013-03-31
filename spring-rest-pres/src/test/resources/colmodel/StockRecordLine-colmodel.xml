@@ -6,12 +6,18 @@
 			<name>productId</name>
 			<width>50</width>
 			<align>center</align>
+			<editor>
+				<editable>false</editable>
+			</editor>
 		</column-model>
 		<column-model>
 			<header>产品名称</header>
 			<name>productIdTxt</name>
-			<width>100</width>
+			<width>150</width>
 			<align>center</align>
+			<editor>
+				<editable>true</editable>
+			</editor>
 		</column-model>
 		<column-model>
 			<header>价格</header>
@@ -31,7 +37,7 @@
 						<message>请填入数字</message>
 					</rule>
 				</rules>
-				<type>text</type>
+				<type>omNumberField</type>
 				<editable>true</editable>
 				<name>price</name>
 			</editor>
@@ -48,6 +54,11 @@
 						<value>true</value>
 						<message>数量是必填的</message>
 					</rule>
+					<rule>
+						<method>min</method>
+						<value>2</value>
+						<message>数量必须大于2</message>
+					</rule>
 				</rules>
 				<type>omNumberField</type>
 				<editable>true</editable>
@@ -59,12 +70,48 @@
 			<name>haveInvoice</name>
 			<width>100</width>
 			<align>center</align>
+			<editor>
+				<editable>true</editable>
+				<type>omCombo</type>
+				<name>haveInvoice</name>
+				<options><![CDATA[
+					{
+					  dataSource:[
+						{text:"请选择",value:""},
+						{text:"是" , value:"1"},
+						{text:"否",value:"0"}],
+						editable: false 
+					}
+    			]]>
+    		</options>
+			</editor>
+			<renderer><![CDATA[
+    			function YesNoRenderer(value){
+			        if('0' === value){
+			            return "否";
+			        }else if('1' === value){
+			            return "是";
+			        }else{
+			            return "";
+			        }
+		    	}
+    			]]>
+    		</renderer>
 		</column-model>
 		<column-model>
 			<header>发票号</header>
 			<name>invoiceNumber</name>
 			<width>100</width>
 			<align>center</align>
+			<editor>
+			<rules>
+				<rule>
+					<customValidator>invoiceNumber</customValidator>
+				</rule>
+			</rules>
+				<type>omNumberField</type>
+				<editable>true</editable>
+			</editor>
 		</column-model>
 	</profile>
 </column-models>

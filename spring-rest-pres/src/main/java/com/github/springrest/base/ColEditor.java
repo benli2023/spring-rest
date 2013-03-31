@@ -12,16 +12,22 @@ public class ColEditor {
 	private final String type;
 	private final boolean editable;
 	private final String name;
+	private final String options;
+	
 	
 	@ObjectCreate(pattern = "column-models/profile/column-model/editor")
 	public ColEditor(
 			@CallParam(pattern = "column-models/profile/column-model/editor/type") String type, 
 			@CallParam(pattern = "column-models/profile/column-model/editor/editable")boolean editable, 
-			@CallParam(pattern = "column-models/profile/column-model/editor/name")String name) {
+			@CallParam(pattern = "column-models/profile/column-model/editor/name")String name,
+			@CallParam(pattern = "column-models/profile/column-model/editor/options")String options
+			) 
+	{
 		super();
 		this.type = type;
 		this.editable = editable;
 		this.name = name;
+		this.options=options;
 	}
 	
 	@SetNext()
@@ -41,7 +47,8 @@ public class ColEditor {
 	public String getName() {
 		return name;
 	}
-	
-	
 
+	public String getOptions() {
+		return options;
+	}
 }
