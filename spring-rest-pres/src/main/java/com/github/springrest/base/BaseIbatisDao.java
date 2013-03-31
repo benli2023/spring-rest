@@ -31,9 +31,9 @@ public abstract class BaseIbatisDao<E,PK extends Serializable> extends SqlMapCli
 		int affectCount = getSqlMapClientTemplate().delete(getDeleteStatement(), id);
 	}
 	
-    public void save(E entity) {
+    public Object save(E entity) {
 		prepareObjectForSaveOrUpdate(entity);
-		getSqlMapClientTemplate().insert(getInsertStatement(), entity);    	
+		return getSqlMapClientTemplate().insert(getInsertStatement(), entity);    	
     }
     
 	public void update(E entity) {

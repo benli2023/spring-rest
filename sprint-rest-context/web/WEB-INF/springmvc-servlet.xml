@@ -29,7 +29,8 @@
 	</bean>
 	
 
-    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+    </bean>
 
     <!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -58,7 +59,9 @@
 		<property name="defaultViews">
 			<list>
 				<!-- for application/json -->
-				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView"> 
+					<property name="objectMapper" ref="objectMapper"/>
+				</bean>
 				<!-- for application/xml -->
 				<!-- 
 				<bean class="org.springframework.web.servlet.view.xml.MarshallingView" >
@@ -70,6 +73,8 @@
 			</list>
 		</property>
     </bean>
+    
+    <bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper"/>
     
     <!-- Mapping exception to the handler view -->
     <bean id="exceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">

@@ -34,7 +34,7 @@ public abstract class BaseManager <E,PK extends Serializable>{
 	
 	/** 插入数据 */
 	public void save(E entity) throws DataAccessException{
-		getEntityDao().save(entity);
+		 getEntityDao().save(entity);
 	}
 	
 	public void removeById(PK id) throws DataAccessException{

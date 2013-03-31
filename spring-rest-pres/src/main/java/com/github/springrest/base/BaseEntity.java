@@ -16,4 +16,5 @@ public class BaseEntity implements java.io.Serializable {
 	
 	protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
 	
+	
 }
