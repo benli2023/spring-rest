@@ -33,7 +33,7 @@
         <property name="sqlExecutor">
         	<bean class="cn.org.rapid_framework.ibatis.sqlmap.engine.execution.LimitSqlExecutor">
         		<property name="dialect">
-        			<bean class="cn.org.rapid_framework.jdbc.dialect.MySQLDialect"/>
+        			<bean class="${database.dialect}"/>
         		</property>
         	</bean>
         </property>
