@@ -41,8 +41,12 @@ var PopupSelection=(function($) {
 		     	if(localPopupOption[fieldId]) {
 			     	var requestUrl=localPopupOption[fieldId].url;
 			     	var title=localPopupOption[fieldId].title;
+			     	var dialogWidth=localPopupOption[fieldId]['dialogWidth']||localPopupOption['dialogWidth']||535;
+			     	var dialogHeight=localPopupOption[fieldId]['dialogHeight']||localPopupOption['dialogHeight']||535;
 			         $( "#dialog-modal").omDialog({
-			         	title:title
+			         	title:title,
+			         	width:dialogWidth,
+			         	height:dialogHeight
 			         });
 			         $( "#dialog-modal").omDialog('open');
 			         var frameLoc=window.frames[0].location;
