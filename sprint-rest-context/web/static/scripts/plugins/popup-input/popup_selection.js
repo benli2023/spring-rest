@@ -46,7 +46,10 @@ var PopupSelection=(function($) {
 			         });
 			         $( "#dialog-modal").omDialog('open');
 			         var frameLoc=window.frames[0].location;
-			         frameLoc.href=requestUrl+"?fieldId="+fieldId+"&profileId="+profileId; 
+			         var width=localPopupOption[fieldId]['tableWidth']||localPopupOption['tableWidth']||500;
+			         var height=localPopupOption[fieldId]['tableHeight']||localPopupOption['tableHeight']||300;
+			         var limit=localPopupOption[fieldId]['limit']||localPopupOption['limit']||300;
+			         frameLoc.href=requestUrl+"?fieldId="+fieldId+"&profileId="+profileId+"&width="+width+"&height="+height+"&limit="+limit; 
 		         }else {
 		         	alert("no such field id.");
 		         }
@@ -55,8 +58,8 @@ var PopupSelection=(function($) {
 		    $(function() {
 		        $( "#dialog-modal").omDialog({
 		            autoOpen: false,
-		            width:535,
-		            height: 465,
+		            width:localPopupOption['dialogWidth']||535,
+		            height: localPopupOption['dialogHeight']||535,
 		            modal: true
 		        });
 		        for(var htmlId in localPopupOption) {
