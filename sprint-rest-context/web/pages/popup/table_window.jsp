@@ -28,17 +28,17 @@
     <!-- view_source_begin -->
     <script type="text/javascript">
         $(document).ready(function() {
-        	var parentFieldId='${fieldId}';
-        	var dataUrl='${ctx}${jsonURL}'; 
+        	var parentFieldId='${tableParam.fieldId}';
+        	var dataUrl='${ctx}${tableParam.dataSource}'; 
         	var dataGridId='#userGrid';
         	var searchFieldId="#q";
         	var searchButtonId="#query";
             $(dataGridId).omGrid({
                 dataSource : dataUrl+'?q=',
-                width : 500,
-                height : 300,
-                limit : 10, //不分页
-                colModel : [ <c:forEach items="${colModelList}" var="current" varStatus="loop">
+                width : ${tableParam.width},
+                height : ${tableParam.height},
+                limit : ${tableParam.limit}, //不分页
+                colModel : [ <c:forEach items="${tableParam.colModelList}" var="current" varStatus="loop">
         	    			   {header: '<c:out value="${current.header}" />',name:'<c:out value="${current.name}" />',width:'<c:out value="${current.width}" />',align:'<c:out value="${current.align}" />' }<c:if test="${!loop.last}">,</c:if>
         					  </c:forEach>
                            ],
