@@ -1,10 +1,11 @@
 package com.github.springrest.base.api;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class FieldError {
 
 	private String fieldName;
-
-	private String[] errorCodes;
 
 	private String errorMessages;
 
@@ -16,14 +17,6 @@ public class FieldError {
 		this.fieldName = fieldName;
 	}
 
-	public String[] getErrorCodes() {
-		return errorCodes;
-	}
-
-	public void setErrorCodes(String[] errorCodes) {
-		this.errorCodes = errorCodes;
-	}
-
 	public String getErrorMessages() {
 		return errorMessages;
 	}
@@ -31,6 +24,5 @@ public class FieldError {
 	public void setErrorMessages(String errorMessages) {
 		this.errorMessages = errorMessages;
 	}
-
 
 }

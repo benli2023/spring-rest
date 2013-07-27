@@ -1,5 +1,8 @@
 package com.github.springrest.util;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.validation.BindingResult;
 
 import com.github.springrest.base.BaseManager;
@@ -14,9 +17,9 @@ public class AjaxHelper {
 
 	private ThrowableResponseConverter throwableResponseConverter;
 
-	public <E, M extends BaseManager<E, Long>> Response save(M baseManager, E entity, BindingResult errors) {
+	public <E, M extends BaseManager<E, Long>> Response save(M baseManager, E entity, BindingResult errors, HttpServletRequest request, HttpServletResponse response) {
 		if (errors.hasErrors()) {
-			return bindingResultResponseConverter.convert(errors);
+			return bindingResultResponseConverter.convert(errors, request, response);
 		}
 		try {
 			baseManager.save(entity);

@@ -2,6 +2,9 @@ package com.github.springrest.base.api;
 
 import java.util.List;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class ValidationError {
 
 	private GlobalError globalError;

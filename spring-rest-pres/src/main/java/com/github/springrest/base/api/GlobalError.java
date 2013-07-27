@@ -1,12 +1,13 @@
 package com.github.springrest.base.api;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class GlobalError {
 
 	private String objectName;
 
 	private String errorMessage;
-
-	private String[] errorCode;
 
 
 	public String getObjectName() {
@@ -23,14 +24,6 @@ public class GlobalError {
 
 	public void setErrorMessage(String errorMessage) {
 		this.errorMessage = errorMessage;
-	}
-
-	public String[] getErrorCode() {
-		return errorCode;
-	}
-
-	public void setErrorCode(String[] errorCode) {
-		this.errorCode = errorCode;
 	}
 
 

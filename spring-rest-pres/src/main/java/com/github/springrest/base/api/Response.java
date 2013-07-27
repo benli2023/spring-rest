@@ -1,5 +1,8 @@
 package com.github.springrest.base.api;
 
+import org.codehaus.jackson.map.annotate.JsonSerialize;
+
+@JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class Response {
 
 	private String statusCode;

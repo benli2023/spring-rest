@@ -2,7 +2,7 @@ package com.github.springrest.constants;
 
 public abstract class ControllerConstants {
 
-	public static final String NEW_PAGE_AJAX_INDTR = "ajaxmethod";
+	public static final String POST_MODE = "postmode";
 
 	public static final String AJAX_SUCCESS_CODE = "000";
 

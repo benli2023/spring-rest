@@ -1,23 +1,30 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"    default-autowire="byName" default-lazy-init="false">
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans 
+        http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd"
+	default-autowire="byName">
 
 	<!-- component-scan自动搜索@Component , @Controller , @Service , @Repository等标注的类 -->
 	<!-- 默认值如果适合，该项可以不用修改 -->
 	<context:component-scan base-package="com.**.service" />
 	<bean id="classPathResourceLoader" class="org.springframework.core.io.DefaultResourceLoader" />
 	<bean id="colModelFactory" class="com.github.springrest.util.ColModelFactory">
-			<constructor-arg index="0">
-				<value>${app.colmodel.package}</value>
-			</constructor-arg>
-			<constructor-arg index="1">
-				<ref bean="classPathResourceLoader" />
-			</constructor-arg>
-			<constructor-arg index="2">
-				<value>15</value>
-			</constructor-arg>
-		</bean>
+		<constructor-arg index="0">
+			<value>${app.colmodel.package}</value>
+		</constructor-arg>
+		<constructor-arg index="1">
+			<ref bean="classPathResourceLoader" />
+		</constructor-arg>
+		<constructor-arg index="2">
+			<value>15</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
+		<property name="defaultLocale" value="cn" />
+	</bean>
 </beans>
