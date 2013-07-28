@@ -7,7 +7,7 @@ import org.springframework.dao.DataAccessException;
 /**
  * @author badqiu
  */
-public interface EntityDao <E,PK extends Serializable>{
+public interface EntityDao<E extends BaseEntity, PK extends Serializable> {
 
 	public Object getById(PK id) throws DataAccessException;
 	

@@ -1,11 +1,10 @@
 package com.github.springrest.util;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.validation.BindingResult;
 
+import com.github.springrest.base.BaseEntity;
 import com.github.springrest.base.BaseManager;
+import com.github.springrest.base.Context;
 import com.github.springrest.base.api.BindingResultResponseConverter;
 import com.github.springrest.base.api.Response;
 import com.github.springrest.base.api.ThrowableResponseConverter;
@@ -18,12 +17,12 @@ public class AjaxHelper {
 	private ThrowableResponseConverter throwableResponseConverter;
 
 
-	public <E, M extends BaseManager<E, Long>> Response save(M baseManager, E entity, BindingResult errors, HttpServletRequest request, HttpServletResponse response) {
+	public <E extends BaseEntity, M extends BaseManager<E, Long>> Response save(M baseManager, E entity, BindingResult errors, Context context) {
 		if (errors.hasErrors()) {
-			return bindingResultResponseConverter.convert(errors, request, response);
+			return bindingResultResponseConverter.convert(errors, context.getServletRequest(), context.getServletResponse());
 		}
 		try {
-			baseManager.save(entity);
+			baseManager.save(context, entity);
 		} catch (Throwable t) {
 			return throwableResponseConverter.convert(t);
 		}
@@ -32,12 +31,12 @@ public class AjaxHelper {
 		return ajaxresponse;
 	}
 
-	public <E, M extends BaseManager<E, Long>> Response update(M baseManager, E entity, BindingResult errors, HttpServletRequest request, HttpServletResponse response) {
+	public <E extends BaseEntity, M extends BaseManager<E, Long>> Response update(M baseManager, E entity, BindingResult errors, Context context) {
 		if (errors.hasErrors()) {
-			return bindingResultResponseConverter.convert(errors, request, response);
+			return bindingResultResponseConverter.convert(errors, context.getServletRequest(), context.getServletResponse());
 		}
 		try {
-			baseManager.update(entity);
+			baseManager.update(context, entity);
 		} catch (Throwable t) {
 			return throwableResponseConverter.convert(t);
 		}

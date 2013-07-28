@@ -18,7 +18,7 @@ import cn.org.rapid_framework.util.MapAndObject;
  * @author badqiu
  * @version 1.0
  */
-public abstract class BaseIbatisDao<E,PK extends Serializable> extends SqlMapClientDaoSupport implements EntityDao<E,PK> {
+public abstract class BaseIbatisDao<E extends BaseEntity, PK extends Serializable> extends SqlMapClientDaoSupport implements EntityDao<E, PK> {
     protected final Log log = LogFactory.getLog(getClass());
     
     
@@ -45,7 +45,9 @@ public abstract class BaseIbatisDao<E,PK extends Serializable> extends SqlMapCli
 	 * 用于子类覆盖,在insert,update之前调用
 	 * @param o
 	 */
-    protected void prepareObjectForSaveOrUpdate(E o) {
+	protected void prepareObjectForSaveOrUpdate(E entity) {
+
+
     }
 
     public String getFindByPrimaryKeyStatement() {
