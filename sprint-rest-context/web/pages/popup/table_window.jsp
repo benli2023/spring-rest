@@ -27,18 +27,19 @@
     </style>
     <!-- view_source_begin -->
     <script type="text/javascript">
+    	var dataGridId='#userGrid';
         $(document).ready(function() {
-        	var parentFieldId='${tableParam.fieldId}';
-        	var dataUrl='${ctx}${tableParam.dataSource}'; 
-        	var dataGridId='#userGrid';
+        	var parentFieldId='${fieldId}';
+        	var dataUrl='${ctx}${jsonURL}';
         	var searchFieldId="#q";
         	var searchButtonId="#query";
+        	var addButtonId="#addRecord";
             $(dataGridId).omGrid({
                 dataSource : dataUrl+'?q=',
-                width : ${tableParam.width},
-                height : ${tableParam.height},
-                limit : ${tableParam.limit}, //不分页
-                colModel : [ <c:forEach items="${tableParam.colModelList}" var="current" varStatus="loop">
+                width : 500,
+                height : 300,
+                limit : 10, //不分页
+                colModel : [ <c:forEach items="${colModelList}" var="current" varStatus="loop">
         	    			   {header: '<c:out value="${current.header}" />',name:'<c:out value="${current.name}" />',width:'<c:out value="${current.width}" />',align:'<c:out value="${current.align}" />' }<c:if test="${!loop.last}">,</c:if>
         					  </c:forEach>
                            ],
@@ -52,6 +53,13 @@
                 onClick:function(e) {
                     $(dataGridId).omGrid("setData", encodeURI(dataUrl+'?searchTerm='+$(searchFieldId).val()));
                 }
+            });
+            
+            $(addButtonId).omButton({
+              onClick:function(e) {
+                   openWindow("Add",'${ctx}${jsonAddURL}');
+                }
+            
             });
             
         	function onKeyEnter(event) {
@@ -70,8 +78,21 @@
         		$(dataGridId).omGrid("setData", encodeURI(dataUrl+'?searchTerm='+$(searchFieldId).val()));
         	}
         	
+	        function  newItemCallback() {
+	         	$(dataGridId).omGrid('reload');
+	        }
+	        
+        	window.newItemCallback=newItemCallback;
         	window.onKeyEnter=onKeyEnter;
         });
+        
+        
+     
+        
+        function openWindow(name,url,height,width) {
+              window.open(url,'_blank','height=700,width=800,menubar=no');
+        }
+        
     </script>
     <table style="width:100%;height:100%">
         <tbody><tr valign="top">
@@ -80,6 +101,7 @@
 			        查询条件(模糊查询)：
 			        <input id="q" onkeyup="onKeyEnter(event)" autocomplete="off"/>
 			       <input id="query" type="submit" value="查询" />
+			       <input id="addRecord" type="submit" value="添加" />
 			    </div>
 				<table id="userGrid"></div>
             </td>
