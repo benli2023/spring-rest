@@ -17,12 +17,27 @@ public class AjaxHelper {
 
 	private ThrowableResponseConverter throwableResponseConverter;
 
+
 	public <E, M extends BaseManager<E, Long>> Response save(M baseManager, E entity, BindingResult errors, HttpServletRequest request, HttpServletResponse response) {
 		if (errors.hasErrors()) {
 			return bindingResultResponseConverter.convert(errors, request, response);
 		}
 		try {
 			baseManager.save(entity);
+		} catch (Throwable t) {
+			return throwableResponseConverter.convert(t);
+		}
+		Response ajaxresponse = new Response();
+		ajaxresponse.setStatusCode(ControllerConstants.AJAX_SUCCESS_CODE);
+		return ajaxresponse;
+	}
+
+	public <E, M extends BaseManager<E, Long>> Response update(M baseManager, E entity, BindingResult errors, HttpServletRequest request, HttpServletResponse response) {
+		if (errors.hasErrors()) {
+			return bindingResultResponseConverter.convert(errors, request, response);
+		}
+		try {
+			baseManager.update(entity);
 		} catch (Throwable t) {
 			return throwableResponseConverter.convert(t);
 		}
