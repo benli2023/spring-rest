@@ -1,6 +1,7 @@
 package com.github.springrest.interceptor;
 
 import java.net.URLEncoder;
+import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -27,6 +28,8 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter implements
 
 	private static final String EQUAL = "=";
 
+	private static final String AND = "&";
+
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 		String requestUri = request.getRequestURI();
@@ -35,7 +38,30 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter implements
 		}
 		boolean isLogon = SessionHelper.isLogon(request);
 		if (!isLogon) {
-			String encodedUrl = URLEncoder.encode(requestUri, urlEncoding);
+			StringBuilder requestURLBuilder = new StringBuilder(256);
+			requestURLBuilder.append(requestUri);
+			Enumeration<?> paramEnum = request.getParameterNames();
+			boolean first = true;
+			while (paramEnum.hasMoreElements()) {
+				String paramKey = (String) paramEnum.nextElement();
+				String[] values = request.getParameterValues(paramKey);
+				if (values != null && values.length > 0) {
+					for (String value : values) {
+						if (StringUtils.hasLength(value)) {
+							if (first) {
+								requestURLBuilder.append(QUESTION);
+							} else {
+								requestURLBuilder.append(AND);
+							}
+							requestURLBuilder.append(paramKey);
+							requestURLBuilder.append(EQUAL);
+							requestURLBuilder.append(value);
+							first = false;
+						}
+					}
+				}
+			}
+			String encodedUrl = URLEncoder.encode(requestURLBuilder.toString(), urlEncoding);
 			StringBuilder builder = new StringBuilder(256);
 			builder.append(logonUri);
 			builder.append(QUESTION);

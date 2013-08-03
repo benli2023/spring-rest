@@ -4,7 +4,6 @@ import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 import cn.org.rapid_framework.util.DateConvertUtils;
 
-
 /**
  * @author badqiu
  */
@@ -13,13 +12,13 @@ public class BaseEntity implements java.io.Serializable {
 	private static final long serialVersionUID = -7200095849148417467L;
 
 	protected static final String DATE_FORMAT = "yyyy-MM-dd";
-	
+
 	protected static final String TIME_FORMAT = "HH:mm:ss";
-	
+
 	protected static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	
+
 	protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
-	
+
 	public static final String FORMAT_UPDATE_DATE = DATE_FORMAT;
 	public static final String FORMAT_CREATED_DATE = DATE_FORMAT;
 
@@ -90,21 +89,21 @@ public class BaseEntity implements java.io.Serializable {
 	public void setCreateIdTxt(String createIdTxt) {
 		this.createIdTxt = createIdTxt;
 	}
-	
+
 	public String getCreatedDateString() {
-		return DateConvertUtils.format(getCreatedDate(), FORMAT_CREATED_DATE);
+		return DateConvertUtils.format(getCreatedDate(), DATE_TIME_FORMAT);
 	}
 
 	public void setCreatedDateString(String value) {
-		setCreatedDate(DateConvertUtils.parse(value, FORMAT_CREATED_DATE, java.util.Date.class));
+		setCreatedDate(DateConvertUtils.parse(value, DATE_TIME_FORMAT, java.util.Date.class));
 	}
 
 	public String getUpdateDateString() {
-		return DateConvertUtils.format(getUpdateDate(), FORMAT_UPDATE_DATE);
+		return DateConvertUtils.format(getUpdateDate(), DATE_TIME_FORMAT);
 	}
 
 	public void setUpdateDateString(String value) {
-		setUpdateDate(DateConvertUtils.parse(value, FORMAT_UPDATE_DATE, java.util.Date.class));
+		setUpdateDate(DateConvertUtils.parse(value, DATE_TIME_FORMAT, java.util.Date.class));
 	}
 
 }
