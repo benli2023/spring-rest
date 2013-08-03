@@ -1,6 +1,7 @@
 package com.github.springrest.base;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -33,8 +34,18 @@ public abstract class BaseManager<E extends BaseEntity, PK extends Serializable>
 	}
 	
 	/** 插入数据 */
+	/**
+	 * @param context
+	 * @param entity
+	 * @throws DataAccessException
+	 */
 	public void save(Context context, E entity) throws DataAccessException {
-		 getEntityDao().save(entity);
+		long userId = SessionHelper.retrieveCurrentUserId(context.getServletRequest());
+		entity.setCreateId(userId);
+		entity.setCreatedDate(new Date());
+		entity.setUpdateDate(new Date());
+		entity.setUpdateId(userId);
+		getEntityDao().save(entity);
 	}
 	
 	public void removeById(Context context, PK id) throws DataAccessException {
@@ -42,6 +53,9 @@ public abstract class BaseManager<E extends BaseEntity, PK extends Serializable>
 	}
 	
 	public void update(Context context, E entity) throws DataAccessException {
+		long userId = SessionHelper.retrieveCurrentUserId(context.getServletRequest());
+		entity.setUpdateDate(new Date());
+		entity.setUpdateId(userId);
 		getEntityDao().update(entity);
 	}
 	

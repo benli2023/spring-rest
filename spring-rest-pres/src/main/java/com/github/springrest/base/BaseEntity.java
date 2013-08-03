@@ -2,6 +2,8 @@ package com.github.springrest.base;
 
 import org.codehaus.jackson.map.annotate.JsonSerialize;
 
+import cn.org.rapid_framework.util.DateConvertUtils;
+
 
 /**
  * @author badqiu
@@ -18,6 +20,9 @@ public class BaseEntity implements java.io.Serializable {
 	
 	protected static final String TIMESTAMP_FORMAT = "yyyy-MM-dd HH:mm:ss.S";
 	
+	public static final String FORMAT_UPDATE_DATE = DATE_FORMAT;
+	public static final String FORMAT_CREATED_DATE = DATE_FORMAT;
+
 	/**
 	 * 更新时间 db_column: updateDate
 	 */
@@ -86,4 +91,20 @@ public class BaseEntity implements java.io.Serializable {
 		this.createIdTxt = createIdTxt;
 	}
 	
+	public String getCreatedDateString() {
+		return DateConvertUtils.format(getCreatedDate(), FORMAT_CREATED_DATE);
+	}
+
+	public void setCreatedDateString(String value) {
+		setCreatedDate(DateConvertUtils.parse(value, FORMAT_CREATED_DATE, java.util.Date.class));
+	}
+
+	public String getUpdateDateString() {
+		return DateConvertUtils.format(getUpdateDate(), FORMAT_UPDATE_DATE);
+	}
+
+	public void setUpdateDateString(String value) {
+		setUpdateDate(DateConvertUtils.parse(value, FORMAT_UPDATE_DATE, java.util.Date.class));
+	}
+
 }

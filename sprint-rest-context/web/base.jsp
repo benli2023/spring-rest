@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<rapid:block name="head"/>
 </head>
 <body>
+	<%@ include file="/commons/logon-info.jsp" %>
 	<%@ include file="/commons/messages.jsp" %>
 
 	<rapid:block name="content"/>

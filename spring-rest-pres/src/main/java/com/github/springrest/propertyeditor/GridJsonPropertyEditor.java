@@ -9,13 +9,12 @@ import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
-import com.github.json.StockRecordLine;
 import com.github.springrest.base.GridEditorJsonData;
 
 public class GridJsonPropertyEditor<T> extends PropertyEditorSupport {
-	
-	private ObjectMapper objectMapper=null;
-	
+
+	private ObjectMapper objectMapper = null;
+
 	public void setObjectMapper(ObjectMapper objectMapper) {
 		this.objectMapper = objectMapper;
 	}
@@ -23,10 +22,10 @@ public class GridJsonPropertyEditor<T> extends PropertyEditorSupport {
 	@SuppressWarnings("unchecked")
 	@Override
 	public String getAsText() {
-		GridEditorJsonData<StockRecordLine> data=(GridEditorJsonData<StockRecordLine>)this.getValue();
-		String result=null;
+		GridEditorJsonData<T> data = (GridEditorJsonData<T>) this.getValue();
+		String result = null;
 		try {
-			result=objectMapper.writeValueAsString(data);
+			result = objectMapper.writeValueAsString(data);
 		} catch (JsonGenerationException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -35,14 +34,15 @@ public class GridJsonPropertyEditor<T> extends PropertyEditorSupport {
 			e.printStackTrace();
 		}
 		return result;
-		
+
 	}
 
 	@Override
 	public void setAsText(String jsonContent) throws IllegalArgumentException {
-		GridEditorJsonData<StockRecordLine> data=null;
+		GridEditorJsonData<T> data = null;
 		try {
-			data=objectMapper.readValue(jsonContent, new TypeReference<GridEditorJsonData<StockRecordLine>>() {});
+			data = objectMapper.readValue(jsonContent, new TypeReference<GridEditorJsonData<T>>() {
+			});
 		} catch (JsonParseException e) {
 			e.printStackTrace();
 		} catch (JsonMappingException e) {
@@ -52,7 +52,5 @@ public class GridJsonPropertyEditor<T> extends PropertyEditorSupport {
 		}
 		this.setValue(data);
 	}
-	
-	
 
 }

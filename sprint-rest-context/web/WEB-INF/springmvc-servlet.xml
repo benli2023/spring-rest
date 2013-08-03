@@ -14,12 +14,37 @@
 	<!-- 开启支持@NumberFormat @DateTimeFormat @Valid标注 ,@DateTimeFormat用于bean 日期属性的格式化,请查看: http://static.springsource.org/spring/docs/3.0.2.RELEASE/spring-framework-reference/htmlsingle/spring-framework-reference.html#mvc-config -->
 	<mvc:annotation-driven validator="validator" />
 
+	<context:annotation-config />
+
+	<bean id="springMVCPlaceholder" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath*:spring-mvc-placeholder.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="applicationIndexUri" class="java.lang.String">
+		<constructor-arg>
+			<value>${core.application.index}</value>
+		</constructor-arg>
+	</bean>
 
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver">
 		<property name="defaultLocale" value="cn" />
 	</bean>
-	
+
 	<bean id="postModeIntercetpor" class="com.github.springrest.interceptor.PostModeHandlerInterceptor" />
+
+	<bean id="userSessionIntercetpor" class="com.github.springrest.interceptor.UserSessionInterceptor">
+		<property name="ignoreUrls">
+			<list>
+				<value>${core.logon}</value>
+			</list>
+		</property>
+		<property name="logonUri" value="${core.logon}" />
+		<property name="urlEncoding" value="UTF-8" />
+	</bean>
 
 	<!-- 自动搜索@Controller标注的类 -->
 	<context:component-scan base-package="com.**.controller" />
@@ -29,6 +54,7 @@
 			<list>
 				<ref bean="localeChangeInterceptor" />
 				<ref bean="postModeIntercetpor" />
+				<ref bean="userSessionIntercetpor" />
 			</list>
 		</property>
 		<property name="order" value="-2147483648" />
@@ -39,8 +65,7 @@
 	</bean>
 
 
-	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-	</bean>
+	<bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"/>
 
 	<!-- 根据客户端的不同的请求决定不同的view进行响应, 如 /blog/1.json /blog/1.xml -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
