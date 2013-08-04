@@ -14,7 +14,7 @@ body .mini-buttonedit *
     background:white;
     border: solid 1px #a5acb5;
     width:123px;
-    height:19px;
+    /*height:19px;*/
     display:inline-block;
     position:static;
     float:left;

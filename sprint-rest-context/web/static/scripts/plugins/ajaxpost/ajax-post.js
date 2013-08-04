@@ -7,7 +7,7 @@
 			var ajaxmethod=getPostMethod();
 			var postURL=getJsonUrl();
 			if(window.validationCallback) {
-				finalResult=window.validationCallback(form);
+				finalResult=window.validationCallback(form,finalResult);
 			}
 			if(ajaxmethod=='ajax'&&finalResult) {
 				var data = $(form).serialize();
@@ -54,5 +54,5 @@
 			//在这里添加自定义验证
 			
 			return disableSubmit(finalResult,'submitButton');
-		}});
+		},focusOnError:true,immediate:true});
 		

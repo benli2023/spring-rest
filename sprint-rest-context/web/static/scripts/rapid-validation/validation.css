@@ -1,10 +1,18 @@
-
-input.required, textarea.required {
-	border: 1px solid #00A8E6;
+span.required {
+ color:	#FF0000;
 }
 
+input.required, textarea.required {
+	/*border: 1px solid #00A8E6; */
+}
+
+input.text {
+	height:17px;
+	width:130px;	
+}	
+
 select.validation-failed, input.validation-failed, textarea.validation-failed {
-    border: 3px solid #FF0000;
+    border: 1px solid #FF0000;
 }
 
 * html select.validation-failed {
