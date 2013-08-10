@@ -24,11 +24,13 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter implements
 
 	public static final String REQUES_URI_PARAM = "redirectURL";
 
-	private static final String QUESTION = "?";
+	public static final String REQUEST_METHOD = "_reqMethod";
 
-	private static final String EQUAL = "=";
+	public static final String QUESTION = "?";
 
-	private static final String AND = "&";
+	public static final String EQUAL = "=";
+
+	public static final String AND = "&";
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -41,6 +43,7 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter implements
 			StringBuilder requestURLBuilder = new StringBuilder(256);
 			requestURLBuilder.append(requestUri);
 			Enumeration<?> paramEnum = request.getParameterNames();
+			String method = request.getMethod();
 			boolean first = true;
 			while (paramEnum.hasMoreElements()) {
 				String paramKey = (String) paramEnum.nextElement();
@@ -61,6 +64,15 @@ public class UserSessionInterceptor extends HandlerInterceptorAdapter implements
 					}
 				}
 			}
+			if (first) {
+				requestURLBuilder.append(QUESTION);
+			} else {
+				requestURLBuilder.append(AND);
+			}
+			requestURLBuilder.append(REQUEST_METHOD);
+			requestURLBuilder.append(EQUAL);
+			requestURLBuilder.append(method);
+
 			String encodedUrl = URLEncoder.encode(requestURLBuilder.toString(), urlEncoding);
 			StringBuilder builder = new StringBuilder(256);
 			builder.append(logonUri);

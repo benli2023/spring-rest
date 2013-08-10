@@ -20,9 +20,9 @@ var PopupSelection=(function($) {
 			        $('#'+fieldId).next().next().next('.mini-buttonedit-close:eq(0)').show();
 		        }
 				if(localPopupOption[fieldId].fields&&$.isPlainObject(localPopupOption[fieldId].fields )) {
-					for( key in localPopupOption[fieldId].fields) {
-						var colName=localPopupOption[fieldId].fields[key];
-						$('#'+key).val(rowData[colName]);
+					for( srcKey in localPopupOption[fieldId].fields) {
+						var destId=localPopupOption[fieldId].fields[srcKey];
+						$('#'+destId).val(rowData[srcKey]);
 					}
 				}
 				//callback

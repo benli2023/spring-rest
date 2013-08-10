@@ -260,6 +260,14 @@
 			<artifactId>jmock-legacy</artifactId>
 			<scope>test</scope>
 		</dependency>
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>libphonenumber</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.googlecode.libphonenumber</groupId>
+			<artifactId>geocoder</artifactId>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
