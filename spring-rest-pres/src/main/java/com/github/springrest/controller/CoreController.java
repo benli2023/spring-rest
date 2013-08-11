@@ -11,6 +11,7 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.util.Assert;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.github.springrest.auth.AuthenticationService;
 import com.github.springrest.base.SessionHelper;
 import com.github.springrest.interceptor.UserSessionInterceptor;
+import com.github.springrest.logging.LogHelper;
 import com.github.springrest.model.Authentication;
 
 @Controller
@@ -36,6 +38,13 @@ public class CoreController implements InitializingBean {
 
 	private static final String LOGON_PAGE = "/core/logon";
 
+	@Autowired(required = true)
+	@Qualifier("autoLogonAuth")
+	private Authentication autoLogonAuth;
+
+	@Value("${core.autologon.enable}")
+	private boolean autoLogon = false;
+
 	private static final String REDIRECT = "redirect:";
 
 	private String getIndexURL() {
@@ -48,7 +57,12 @@ public class CoreController implements InitializingBean {
 	/** 进入登录 */
 	@RequestMapping(value = "/logon", method = RequestMethod.GET)
 	public String _logon(ModelMap model, Authentication authentication, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		model.addAttribute("authentication", authentication);
+		if (this.autoLogon) {
+			model.addAttribute("authentication", autoLogonAuth);
+		} else {
+			model.addAttribute("authentication", authentication);
+		}
+		model.addAttribute("autoLogon", autoLogon);
 		return LOGON_PAGE;
 	}
 
@@ -65,7 +79,11 @@ public class CoreController implements InitializingBean {
 	/** 登录 */
 	@RequestMapping(value = "/logon", method = RequestMethod.POST)
 	public String logon(ModelMap model, @Valid Authentication authentication, BindingResult errors, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		if (errors.hasErrors()) {
+		if (this.autoLogon) {
+			authentication.setCredential(this.autoLogonAuth.getCredential());
+			authentication.setPrincipal(this.autoLogonAuth.getPrincipal());
+		}
+		if (!autoLogon && errors.hasErrors()) {
 			model.addAttribute("authentication", authentication);
 			return LOGON_PAGE;
 		}
@@ -95,14 +113,30 @@ public class CoreController implements InitializingBean {
 					buildForm.append("</form>");
 					buildForm.append("</body>");
 					buildForm.append("</html>");
+
+					if (LogHelper.isDebugEnable(CoreController.class)) {
+						LogHelper.debug(CoreController.class, "logon", "redirect form:" + buildForm.toString());
+					}
+
 					PrintWriter writer = response.getWriter();
 					writer.print(buildForm.toString());
 					return null;
 
 				} else {
-					StringBuilder builder = new StringBuilder(128);
+					StringBuilder builder = new StringBuilder(REDIRECT.length() + urltoGo.length());
 					builder.append(REDIRECT);
-					builder.append(urltoGo);
+					int methodIndex = urltoGo.lastIndexOf(UserSessionInterceptor.REQUEST_METHOD);
+					if (methodIndex > 0) {
+						int andIndex = urltoGo.indexOf(UserSessionInterceptor.AND, methodIndex + 1);
+						if (andIndex > 0) {
+							builder.append(urltoGo.substring(0, methodIndex));
+							builder.append(urltoGo.substring(andIndex + 1));
+						} else {
+							builder.append(urltoGo.substring(0, methodIndex - 1));
+						}
+					} else {
+						builder.append(urltoGo);
+					}
 					return builder.toString();
 				}
 
@@ -152,10 +186,17 @@ public class CoreController implements InitializingBean {
 		this.authenticationService = authenticationService;
 	}
 
+	public void setAutoLogon(boolean autoLogon) {
+		this.autoLogon = autoLogon;
+	}
+
+	public void setAutoLogonAuth(Authentication autoLogonAuth) {
+		this.autoLogonAuth = autoLogonAuth;
+	}
+
 	public void afterPropertiesSet() throws Exception {
 		Assert.state(StringUtils.hasLength(applicationIndexUri), "applicationIndexUri can not be empty.");
 		Assert.state(authenticationService != null, "authenticationService can not be null.");
-
 	}
 
 	class ParsedReuslt {
